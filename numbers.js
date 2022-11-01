@@ -1,7 +1,7 @@
 "use strict";
 
 const BASE_URL = 'http://numbersapi.com';
-const $RESULTS = $("#fav-num-facts"); // make it lowercase constant
+const $results = $("#fav-num-facts"); // make it lowercase constant
 
 /**
  * Controller:
@@ -16,12 +16,12 @@ async function getNumTrivia(evt) {
 
   const favNums = $('#fav-num').val();
 
-  const fact1 = getNumsFacts(favNums); // These are promises end with 'P'
-  const fact3 = getNumsFacts(favNums);
-  const fact2 = getNumsFacts(favNums);
-  const fact4 = getNumsFacts(favNums);
+  const fact1P = getNumsFacts(favNums);
+  const fact2P = getNumsFacts(favNums);
+  const fact3P = getNumsFacts(favNums);
+  const fact4P = getNumsFacts(favNums);
 
-  const results = await Promise.allSettled([fact1, fact2, fact3, fact4]);
+  const results = await Promise.allSettled([fact1P, fact2P, fact3P, fact4P]);
   populateResults(results);
 }
 
@@ -30,18 +30,18 @@ async function getNumTrivia(evt) {
  * Clears old results and populates dom with facts
  */
 function populateResults(numFacts) {
-  $RESULTS.empty();
+  $results.empty();
   for (const numFact of numFacts) {
     debugger;
     if (numFact.value["text"] !== undefined) {
-      $RESULTS.append( //Can refactor html element build to a separate function
+      $results.append( //Can refactor html element build to a separate function
         `
         <p>${numFact.value["text"]}</p>
         `
       );
     } else {
       for (let key in numFact.value) {
-        $RESULTS.append(
+        $results.append(
           `
           <p>${numFact.value[key]}</p>
           `
